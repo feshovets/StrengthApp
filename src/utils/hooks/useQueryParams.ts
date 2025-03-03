@@ -11,7 +11,7 @@ export function useQueryParams() {
     const updateParam = (key: string, value: string | number | null) => {
         const newParams = new URLSearchParams(searchParams);
         // Preserve valid falsey values
-        if (value !== null && value !== undefined) newParams.set(key, value.toString());
+        if (value !== null) newParams.set(key, value.toString());
         else newParams.delete(key);
         setSearchParams(newParams);
     };

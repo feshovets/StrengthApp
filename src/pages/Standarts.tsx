@@ -5,9 +5,8 @@ import InputWrapper from "../components/input/InputWrapper";
 import WeightInput from "../components/input/WeightInput";
 import SelectInput from "../components/input/SelectInput";
 
-
 import { useQueryParams } from "../utils/hooks/useQueryParams";
-import { Exercise, standarts } from "../utils/standarts";
+import { Exercise, Gender, standarts } from "../utils/standarts";
 import { dictionary } from "../utils/dictionary";
 import { calculate1RM } from "../utils/formulas";
 
@@ -16,7 +15,7 @@ function Standarts() {
 
     // Read values from URL (no need to store separately in state)
     const units = getParam("u", "kg") as string;
-    const gender = getParam("g", "male") as string;
+    const gender = getParam("g", "male") as Gender;
     const exercise = getParam("ex", "squat") as Exercise;
 
     const bodyweight = getNumberParam("bw");
@@ -42,7 +41,7 @@ function Standarts() {
                     <SelectInput
                         id="gender"
                         value={gender}
-                        setValue={(value) => updateParam("g", value)}
+                        setValue={(value) => { updateParam("g", value) }}
                         options={dictionary.gender}
                         className="col-span-3 h-8 sm:h-9"
                     />
@@ -52,8 +51,8 @@ function Standarts() {
                         id="bodyweight"
                         units={units}
                         weight={bodyweight}
-                        setUnits={(value) => updateParam("u", value)}
-                        setWeight={(value) => updateParam("bw", value)}
+                        setUnits={(value) => { updateParam("u", value) }}
+                        setWeight={(value) => { updateParam("bw", value) }}
                         className="col-span-3 h-8 sm:h-9 "
                     />
                 </InputWrapper>
@@ -64,7 +63,7 @@ function Standarts() {
                     <SelectInput
                         id="exercise"
                         value={exercise}
-                        setValue={(value) => updateParam("ex", value)}
+                        setValue={(value) => { updateParam("ex", value) }}
                         options={dictionary.exercise}
                         className="col-span-3 h-8 sm:h-9"
                     />
@@ -74,8 +73,8 @@ function Standarts() {
                         id="weight"
                         units={units}
                         weight={weight}
-                        setUnits={(value) => updateParam("u", value)}
-                        setWeight={(value) => updateParam("w", value)}
+                        setUnits={(value) => { updateParam("u", value) }}
+                        setWeight={(value) => { updateParam("w", value) }}
                         className="col-span-3 h-8 sm:h-9"
                     />
                 </InputWrapper>
@@ -111,21 +110,21 @@ function BarChart({
     oneRepMax: number,
     bodyweight: number,
     exercise: Exercise,
-    gender: string,
+    gender: Gender,
     units: string,
 }) {
-    const ratios = standarts.male[exercise];
+    const ratios = standarts[gender][exercise];
     const level = ratios.reduce((level, ratio) => oneRepMax >= ratio * bodyweight ? level + 1 : level, -1);
     const isHidden = oneRepMax == 0 || bodyweight == 0;
 
-    const bars = standarts.male[exercise].map((ratio, index) => {
+    const bars = ratios.map((ratio, index) => {
         const levelWeight = bodyweight * ratio; //weight for specific strength level
         const isOpacity = isHidden || oneRepMax * index < levelWeight * index; //if index 0 (beginner) 0 < 0 equal false
 
         return (
             <div
-                key={'bar-' + index}
-                style={{ height: `${(30 + index * 15)}%` }}
+                key={'bar-' + String(index)}
+                style={{ height: `${String(30 + index * 15)}%` }}
                 className={twMerge("flex flex-col space-y-1 transition-opacity min-h-20 text-center", isOpacity && "opacity-60")}
             >
                 <p className="sm:text-xl font-bold">

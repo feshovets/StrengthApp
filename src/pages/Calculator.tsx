@@ -43,9 +43,9 @@ export default function Calculator() {
                     <WeightInput
                         id="weight"
                         weight={weight}
-                        setWeight={(value) => updateParam('w', value)}
+                        setWeight={(value) => { updateParam('w', value) }}
                         units={units}
-                        setUnits={(value) => updateParam('u', value)}
+                        setUnits={(value) => { updateParam('u', value) }}
                         className="col-span-3 h-8 sm:h-9"
                     />
                 </InputWrapper>
@@ -54,7 +54,7 @@ export default function Calculator() {
                         id="reps"
                         type="number"
                         value={reps ? reps : ""}
-                        onChange={(e) => updateParam("r", e.target.value)}
+                        onChange={(e) => { updateParam("r", e.target.value) }}
                         className="col-span-3 border border-zinc-400 h-8 sm:h-9 px-2 rounded focus:outline-zinc-500 text-sm sm:text-base"
                     />
                 </InputWrapper>
@@ -75,7 +75,7 @@ export default function Calculator() {
                     </thead>
                     <tbody>
                         {estimation.map(({ percentage, weight, reps }) => (
-                            <tr key={"p-" + percentage} className="border-t border-zinc-400 hover:bg-zinc-200 text-nowrap">
+                            <tr key={"p-" + String(percentage)} className="border-t border-zinc-400 hover:bg-zinc-200 text-nowrap">
                                 <td className="py-2 px-4">{percentage}%</td>
                                 <td className="py-2 px-4">{weight.toFixed(1)} {units}</td>
                                 <td className="py-2 px-4">{reps}</td>
@@ -110,7 +110,7 @@ function ExtraTable({
     return (
         <div className="relative bg-zinc-50 py-6 px-8 rounded-md shadow-sm space-y-2">
             <h3 className="text-lg sm:text-2xl font-bold text-center py-2 sm:py-4 rounded-md leading-5">
-                Estimated 1RM for {" "} <br className="sm:hidden"/>
+                Estimated 1RM for {" "} <br className="sm:hidden" />
                 <span className="underline">x</span>
                 {" "}more{" "}
                 <span className="underline">
@@ -127,7 +127,7 @@ function ExtraTable({
                 </thead>
                 <tbody>
                     {tableData.map(({ weight, reps, oneRM }) => (
-                        <tr key={"w" + weight + "r" + reps} className="border-t border-zinc-400 hover:bg-zinc-200 text-nowrap">
+                        <tr key={"w" + String(weight) + "r" + String(reps)} className="border-t border-zinc-400 hover:bg-zinc-200 text-nowrap">
                             <td className="py-2 px-4">{weight}</td>
                             <td className="py-2 px-4">{reps}</td>
                             <td className="py-2 px-4">{oneRM.toFixed(1)} {units}</td>
