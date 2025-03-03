@@ -2,7 +2,6 @@ import { Routes, Route } from "react-router-dom";
 import Calculator from "./pages/Calculator";
 import Standarts from "./pages/Standarts";
 import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
 
 function App() {
   return (
