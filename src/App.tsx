@@ -5,6 +5,7 @@ import { twMerge } from "tailwind-merge";
 import Calculator from "./pages/Calculator";
 import Standarts from "./pages/Standarts";
 import { HelmetProvider } from "react-helmet-async";
+import { Policy } from "./pages/Policy";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Calculator />} />
           <Route path="/standarts" element={<Standarts />} />
+          <Route path="/policy" element={<Policy />} />
         </Routes>
         <Footer />
       </main>
@@ -73,7 +75,7 @@ function Footer() {
       </div>
       <div className="text-xs sm:text-sm space-x-4 text-zinc-500 mb-1 sm:mb-0">
         <Link to={'/'} className="hover:text-zinc-800 dark:hover:text-zinc-300">About</Link>
-        <Link to={'/'} className="hover:text-zinc-800 dark:hover:text-zinc-300">Cookie Policy</Link>
+        <Link to={'/policy'} className="hover:text-zinc-800 dark:hover:text-zinc-300">Privacy Policy</Link>
       </div>
     </footer>
   )
