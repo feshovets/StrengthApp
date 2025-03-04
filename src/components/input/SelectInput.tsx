@@ -18,10 +18,12 @@ function SelectInput({
         <div className={twMerge("relative flex grow text-sm sm:text-base", className)}>
             <select
                 id={id} key={id} value={value} onChange={(e) => { setValue(e.target.value) }}
-                className="flex grow border border-zinc-400 py-1 px-2 rounded appearance-none peer focus:outline-zinc-500"
+                className={twMerge("flex grow border py-1 px-2 rounded appearance-none peer",
+                    "border-zinc-300 dark:border-zinc-700 focus:outline-0 dark:bg-zinc-900"
+                )}
             >
                 {options.map((option) => (
-                    <option value={option.value} key={id + '-' + option.value}>
+                    <option className="scheme-dark-light" value={option.value} key={id + '-' + option.value}>
                         {option.name}
                     </option>
                 ))}

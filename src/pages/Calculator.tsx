@@ -1,5 +1,7 @@
 import { useMemo } from "react";
 
+import Card from "../components/card/Card";
+import Input from "../components/input/Input";
 import WeightInput from "../components/input/WeightInput";
 import InputWrapper from "../components/input/InputWrapper";
 
@@ -34,8 +36,8 @@ export default function Calculator() {
     })), [weight, reps])
 
     return (
-        <div className="px-4 sm:px-0 w-full max-w-3xl mx-auto space-y-4">
-            <div className="grid grid-cols-4 bg-zinc-50 py-6 px-8 rounded-md shadow-sm gap-y-2 gap-x-2 sm:gap-x-4">
+        <div className="w-full max-w-3xl mx-auto space-y-4 px-4">
+            <Card className="grid grid-cols-4 py-6 px-8 gap-y-2 gap-x-2 sm:gap-x-4">
                 <h2 className="col-span-4 text-xl sm:text-2xl font-bold text-center py-2">
                     One Rep Max Calculator
                 </h2>
@@ -50,18 +52,17 @@ export default function Calculator() {
                     />
                 </InputWrapper>
                 <InputWrapper label="Repetitions:" htmlFor="reps">
-                    <input
+                    <Input
                         id="reps"
                         type="number"
                         value={reps ? reps : ""}
                         onChange={(e) => { updateParam("r", e.target.value) }}
-                        className="col-span-3 border border-zinc-400 h-8 sm:h-9 px-2 rounded focus:outline-zinc-500 text-sm sm:text-base"
+                        className="col-span-3 border h-8 sm:h-9 px-2 rounded text-sm sm:text-base"
                     />
                 </InputWrapper>
-            </div>
+            </Card>
 
-
-            <div className="bg-zinc-50 py-6 px-8 rounded-md shadow-sm space-y-2">
+            <Card className="py-6 px-8 space-y-2">
                 <h3 className="text-lg sm:text-2xl font-bold text-center py-2 sm:py-4 rounded-md">
                     Your one rep max is {estimation[0].weight.toFixed(1)} kg
                 </h3>
@@ -75,7 +76,10 @@ export default function Calculator() {
                     </thead>
                     <tbody>
                         {estimation.map(({ percentage, weight, reps }) => (
-                            <tr key={"p-" + String(percentage)} className="border-t border-zinc-400 hover:bg-zinc-200 text-nowrap">
+                            <tr
+                                key={"p-" + String(percentage)}
+                                className="border-t border-zinc-300 dark:border-zinc-700 text-nowrap"
+                            >
                                 <td className="py-2 px-4">{percentage}%</td>
                                 <td className="py-2 px-4">{weight.toFixed(1)} {units}</td>
                                 <td className="py-2 px-4">{reps}</td>
@@ -83,7 +87,7 @@ export default function Calculator() {
                         ))}
                     </tbody>
                 </table>
-            </div>
+            </Card>
 
             <ExtraTable key={"exRT"} weight={Number(weight)} reps={Number(reps)} units={units} forReps />
             <ExtraTable key={"exWT"} weight={Number(weight)} reps={Number(reps)} units={units} />
@@ -108,7 +112,7 @@ function ExtraTable({
     const tableData = forReps ? extraReps : extraWeight;
 
     return (
-        <div className="relative bg-zinc-50 py-6 px-8 rounded-md shadow-sm space-y-2">
+        <Card className="relative py-6 px-8 space-y-2">
             <h3 className="text-lg sm:text-2xl font-bold text-center py-2 sm:py-4 rounded-md leading-5">
                 Estimated 1RM for {" "} <br className="sm:hidden" />
                 <span className="underline">x</span>
@@ -127,7 +131,10 @@ function ExtraTable({
                 </thead>
                 <tbody>
                     {tableData.map(({ weight, reps, oneRM }) => (
-                        <tr key={"w" + String(weight) + "r" + String(reps)} className="border-t border-zinc-400 hover:bg-zinc-200 text-nowrap">
+                        <tr
+                            key={"w" + String(weight) + "r" + String(reps)}
+                            className="border-t border-zinc-300 dark:border-zinc-700 text-nowrap"
+                        >
                             <td className="py-2 px-4">{weight}</td>
                             <td className="py-2 px-4">{reps}</td>
                             <td className="py-2 px-4">{oneRM.toFixed(1)} {units}</td>
@@ -135,6 +142,6 @@ function ExtraTable({
                     ))}
                 </tbody>
             </table>
-        </div>
+        </Card>
     )
 }

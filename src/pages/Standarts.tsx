@@ -1,6 +1,8 @@
 import { useMemo } from "react";
 import { twMerge } from "tailwind-merge";
 
+import Card from "../components/card/Card";
+import Input from "../components/input/Input";
 import InputWrapper from "../components/input/InputWrapper";
 import WeightInput from "../components/input/WeightInput";
 import SelectInput from "../components/input/SelectInput";
@@ -26,8 +28,8 @@ function Standarts() {
     const oneRepMax = useMemo(() => calculate1RM(Number(weight), Number(reps)), [weight, reps]);
 
     return (
-        <div className="px-4 sm:px-0 w-full max-w-3xl mx-auto space-y-4">
-            <section className="grid grid-cols-4 bg-zinc-50 py-6 px-8 rounded-md shadow-sm gap-y-2 gap-x-2 sm:gap-x-4">
+        <div className="w-full max-w-3xl mx-auto space-y-4 px-4">
+            <Card className="grid grid-cols-4 py-6 px-8 gap-y-2 gap-x-2 sm:gap-x-4">
                 <div className="col-span-4 py-2">
                     <h3 className="text-xl sm:text-2xl font-bold text-center rounded-md">
                         Strength Standards
@@ -56,9 +58,9 @@ function Standarts() {
                         className="col-span-3 h-8 sm:h-9 "
                     />
                 </InputWrapper>
-            </section>
+            </Card>
 
-            <section className="grid grow grid-cols-4 gap-y-2 gap-x-2 sm:gap-x-4 bg-zinc-50 py-6 px-8 rounded-md shadow-sm">
+            <Card className="grid grid-cols-4 py-6 px-8 gap-y-2 gap-x-2 sm:gap-x-4">
                 <InputWrapper label="Exercise:" htmlFor="exercise">
                     <SelectInput
                         id="exercise"
@@ -79,15 +81,15 @@ function Standarts() {
                     />
                 </InputWrapper>
                 <InputWrapper label="Repetitions:" htmlFor="reps">
-                    <input
+                    <Input
                         id="reps"
                         type="number"
                         value={reps ? reps : ""}
                         onChange={(e) => updateParam("r", e.target.value)}
-                        className="col-span-3 border border-zinc-400 h-8 sm:h-9 px-2 rounded focus:outline-zinc-500 text-sm sm:text-base"
+                        className="col-span-3 border h-8 sm:h-9 px-2 rounded text-sm sm:text-base"
                     />
                 </InputWrapper>
-            </section>
+            </Card>
 
             <BarChart
                 oneRepMax={oneRepMax}
@@ -117,7 +119,7 @@ function BarChart({
     const level = ratios.reduce((level, ratio) => oneRepMax >= ratio * bodyweight ? level + 1 : level, -1);
     const isHidden = oneRepMax == 0 || bodyweight == 0;
 
-    const bars = ratios.map((ratio, index) => {
+    const bars = useMemo(() => ratios.map((ratio, index) => {
         const levelWeight = bodyweight * ratio; //weight for specific strength level
         const isOpacity = isHidden || oneRepMax * index < levelWeight * index; //if index 0 (beginner) 0 < 0 equal false
 
@@ -125,7 +127,7 @@ function BarChart({
             <div
                 key={'bar-' + String(index)}
                 style={{ height: `${String(30 + index * 15)}%` }}
-                className={twMerge("flex flex-col space-y-1 transition-opacity min-h-20 text-center", isOpacity && "opacity-60")}
+                className={twMerge("flex flex-col space-y-1 transition-opacity min-h-20 text-center", isOpacity && "opacity-50 dark:opacity-30")}
             >
                 <p className="sm:text-xl font-bold">
                     {levelWeight}
@@ -133,10 +135,10 @@ function BarChart({
                 </p>
 
                 <div className={
-                    twMerge("flex grow text-white  bg-zinc-800 rounded items-center justify-center transition-color",
-                        Math.max(level, 0) == index && !isOpacity && "text-black bg-red-400"
+                    twMerge("flex grow text-white bg-zinc-800 dark:bg-zinc-200 dark:text-black  rounded items-center justify-center transition-color",
+                        Math.max(level, 0) == index && !isOpacity && "text-black bg-rose-500 dark:bg-rose-500"
                     )}>
-                    <p className="text-lg sm:text-2xl md:text-3xl font-bold opacity-20">
+                    <p className="text-lg sm:text-2xl md:text-3xl font-bold opacity-30">
                         {ratio.toFixed(2)}{"x"}
                     </p>
                 </div>
@@ -146,14 +148,12 @@ function BarChart({
                 </h5>
             </div>
         )
-
-    })
+    }), [bodyweight, oneRepMax, ratios])
 
 
     return (
-        <section
-            className={twMerge("bg-zinc-50 py-4 px-4 sm:px-8 rounded-md shadow-sm overflow-hidden transition-all")}>
-            <div className="text-center pt-4 sm:pt-8 space-y-0.5">
+        <Card className={twMerge("py-6 px-4 sm:px-8 overflow-hidden transition-all")}>
+            <div className="text-center pt-2 sm:pt-4 space-y-0.5">
                 <h2 className="text-lg sm:text-2xl font-bold">
                     Your <span className="underline">{exercise}</span> strength level: {' '}
                     {!isHidden && <span className={"underline capitalize"}> {dictionary.levels[Math.max(level, 0)]}</span>}
@@ -166,7 +166,7 @@ function BarChart({
             <div className={"grid grid-cols-5 gap-2 sm:gap-x-4 aspect-[1.5] items-end"}>
                 {bars}
             </div>
-        </section>
+        </Card>
     )
 }
 

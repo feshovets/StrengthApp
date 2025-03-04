@@ -1,5 +1,6 @@
 import { twMerge } from "tailwind-merge";
 import { ArrowDown } from "../../icons";
+import Input from "./Input";
 
 export default function WeightInput({
     id,
@@ -22,13 +23,15 @@ export default function WeightInput({
 }) {
     return (
         <div className={twMerge("relative flex grow text-sm sm:text-base", className)}>
-            <input
+            <Input
                 id={id} type="number" min={min} max={max} value={weight ?? ""} onChange={(e) => { setWeight(e.target.value ? Number(e.target.value) : null) }}
-                className={"flex grow border border-zinc-400 px-2 rounded-s focus:outline-zinc-500 h-full"}
+                className={"flex appearance-none grow border px-2 rounded-s h-full"}
             />
             <select
                 id="units" onChange={(e) => { setUnits(e.target.value) }} value={units}
-                className={"peer w-12 sm:w-14 border border-s-0 border-zinc-400 rounded-e appearance-none px-1.5 sm:px-2 focus:outline-zinc-500"}
+                className={twMerge("peer w-12 sm:w-14 border border-s-0 rounded-e appearance-none px-1.5 sm:px-2",
+                    "border-zinc-300 dark:border-zinc-700 focus:outline-0 dark:bg-zinc-900"
+                )}
             >
                 <option value="kg">kg</option>
                 <option value="lb">lb</option>
