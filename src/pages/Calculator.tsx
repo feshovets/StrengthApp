@@ -7,6 +7,7 @@ import InputWrapper from "../components/input/InputWrapper";
 
 import { useQueryParams } from "../utils/hooks/useQueryParams";
 import { calculate1RM } from "../utils/formulas";
+import { Helmet } from "react-helmet-async";
 
 const estimationTable = [
     { percentage: 100, reps: 1 },
@@ -36,62 +37,76 @@ export default function Calculator() {
     })), [weight, reps])
 
     return (
-        <div className="w-full max-w-3xl mx-auto space-y-4 px-4">
-            <Card className="grid grid-cols-4 py-6 px-8 gap-y-2 gap-x-2 sm:gap-x-4">
-                <h2 className="col-span-4 text-xl sm:text-2xl font-bold text-center py-2">
-                    One Rep Max Calculator
-                </h2>
-                <InputWrapper label="Weight:" htmlFor="weight">
-                    <WeightInput
-                        id="weight"
-                        weight={weight}
-                        setWeight={(value) => { updateParam('w', value) }}
-                        units={units}
-                        setUnits={(value) => { updateParam('u', value) }}
-                        className="col-span-3 h-8 sm:h-9"
-                    />
-                </InputWrapper>
-                <InputWrapper label="Repetitions:" htmlFor="reps">
-                    <Input
-                        id="reps"
-                        type="number"
-                        value={reps ? reps : ""}
-                        onChange={(e) => { updateParam("r", e.target.value) }}
-                        className="col-span-3 border h-8 sm:h-9 px-2 rounded text-sm sm:text-base"
-                    />
-                </InputWrapper>
-            </Card>
+        <>
+            <Helmet>
 
-            <Card className="py-6 px-8 space-y-2">
-                <h3 className="text-lg sm:text-2xl font-bold text-center py-2 sm:py-4 rounded-md">
-                    Your one rep max is {estimation[0].weight.toFixed(1)} kg
-                </h3>
-                <table className="w-full text-left text-sm sm:text-base">
-                    <thead>
-                        <tr>
-                            <th className="py-2 px-4">Percentage of 1RM</th>
-                            <th className="py-2 px-4">Weight</th>
-                            <th className="py-2 px-4">Repetitions of 1RM</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {estimation.map(({ percentage, weight, reps }) => (
-                            <tr
-                                key={"p-" + String(percentage)}
-                                className="border-t border-zinc-300 dark:border-zinc-700 text-nowrap"
-                            >
-                                <td className="py-2 px-4">{percentage}%</td>
-                                <td className="py-2 px-4">{weight.toFixed(1)} {units}</td>
-                                <td className="py-2 px-4">{reps}</td>
+                <title>One Rep Max Calculator</title>
+                <meta
+                    name="description"
+                    content="Calculate your estimated one rep max (1RM) based on your recent lifts. Use our strength estimation table to see how much weight you can lift for different rep ranges."
+                />
+
+                <meta property="og:title" content="One Rep Max Calculator - Estimate Your Strength" />
+                <meta property="og:description" content="Find out your estimated 1RM and compare it to different rep percentages. Track your strength progress easily!" />
+                <meta property="og:type" content="website" />
+            </Helmet>
+            <div className="w-full max-w-3xl mx-auto space-y-4 px-4">
+                <Card className="grid grid-cols-4 py-6 px-8 gap-y-2 gap-x-2 sm:gap-x-4">
+                    <h2 className="col-span-4 text-xl sm:text-2xl font-bold text-center py-2">
+                        One Rep Max Calculator
+                    </h2>
+                    <InputWrapper label="Weight:" htmlFor="weight">
+                        <WeightInput
+                            id="weight"
+                            weight={weight}
+                            setWeight={(value) => { updateParam('w', value) }}
+                            units={units}
+                            setUnits={(value) => { updateParam('u', value) }}
+                            className="col-span-3 h-8 sm:h-9"
+                        />
+                    </InputWrapper>
+                    <InputWrapper label="Repetitions:" htmlFor="reps">
+                        <Input
+                            id="reps"
+                            type="number"
+                            value={reps ? reps : ""}
+                            onChange={(e) => { updateParam("r", e.target.value) }}
+                            className="col-span-3 border h-8 sm:h-9 px-2 rounded text-sm sm:text-base"
+                        />
+                    </InputWrapper>
+                </Card>
+
+                <Card className="py-6 px-8 space-y-2">
+                    <h3 className="text-lg sm:text-2xl font-bold text-center py-2 sm:py-4 rounded-md">
+                        Your one rep max is {estimation[0].weight.toFixed(1)} kg
+                    </h3>
+                    <table className="w-full text-left text-sm sm:text-base">
+                        <thead>
+                            <tr>
+                                <th className="py-2 px-4">Percentage of 1RM</th>
+                                <th className="py-2 px-4">Weight</th>
+                                <th className="py-2 px-4">Repetitions of 1RM</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </Card>
+                        </thead>
+                        <tbody>
+                            {estimation.map(({ percentage, weight, reps }) => (
+                                <tr
+                                    key={"p-" + String(percentage)}
+                                    className="border-t border-zinc-300 dark:border-zinc-700 text-nowrap"
+                                >
+                                    <td className="py-2 px-4">{percentage}%</td>
+                                    <td className="py-2 px-4">{weight.toFixed(1)} {units}</td>
+                                    <td className="py-2 px-4">{reps}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </Card>
 
-            <ExtraTable key={"exRT"} weight={Number(weight)} reps={Number(reps)} units={units} forReps />
-            <ExtraTable key={"exWT"} weight={Number(weight)} reps={Number(reps)} units={units} />
-        </div>
+                <ExtraTable key={"exRT"} weight={Number(weight)} reps={Number(reps)} units={units} forReps />
+                <ExtraTable key={"exWT"} weight={Number(weight)} reps={Number(reps)} units={units} />
+            </div>
+        </>
     );
 }
 

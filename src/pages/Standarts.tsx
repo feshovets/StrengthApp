@@ -11,6 +11,7 @@ import { useQueryParams } from "../utils/hooks/useQueryParams";
 import { Exercise, Gender, standarts } from "../utils/standarts";
 import { dictionary } from "../utils/dictionary";
 import { calculate1RM } from "../utils/formulas";
+import { Helmet } from "react-helmet-async";
 
 function Standarts() {
     const { getParam, getNumberParam, updateParam } = useQueryParams();
@@ -28,77 +29,89 @@ function Standarts() {
     const oneRepMax = useMemo(() => calculate1RM(Number(weight), Number(reps)), [weight, reps]);
 
     return (
-        <div className="w-full max-w-3xl mx-auto space-y-4 px-4">
-            <Card className="grid grid-cols-4 py-6 px-8 gap-y-2 gap-x-2 sm:gap-x-4">
-                <div className="col-span-4 py-2">
-                    <h3 className="text-xl sm:text-2xl font-bold text-center rounded-md">
-                        Strength Standards
-                    </h3>
-                    <p className="text-xs sm:text-sm font-semibold text-zinc-500 text-center leading-4">
-                        (according to your time spent in the gym)
-                    </p>
-                </div>
+        <>
+            <Helmet>
+                <title>Strength Standards</title>
+                <meta
+                    name="description"
+                    content="Check your strength level based on your bodyweight, exercise, and gender. Compare your lifts such as bench, deadlift, squat, pull-ups and more to the man or female strength standards."
+                />
+                <meta property="og:title" content="Strength Standards - Compare Your Lifts" />
+                <meta property="og:description" content="Find out where you stand in strength levels based on your weight, gender, and exercise." />
+                <meta property="og:type" content="website" />
+            </Helmet>
+            <div className="w-full max-w-3xl mx-auto space-y-4 px-4">
+                <Card className="grid grid-cols-4 py-6 px-8 gap-y-2 gap-x-2 sm:gap-x-4">
+                    <div className="col-span-4 py-2">
+                        <h3 className="text-xl sm:text-2xl font-bold text-center rounded-md">
+                            Strength Standards
+                        </h3>
+                        <p className="text-xs sm:text-sm font-semibold text-zinc-500 text-center leading-4">
+                            (according to your time spent in the gym)
+                        </p>
+                    </div>
 
-                <InputWrapper label="Gender:" htmlFor="gender">
-                    <SelectInput
-                        id="gender"
-                        value={gender}
-                        setValue={(value) => { updateParam("g", value) }}
-                        options={dictionary.gender}
-                        className="col-span-3 h-8 sm:h-9"
-                    />
-                </InputWrapper>
-                <InputWrapper label="Bodyweight:" htmlFor="bodyweight">
-                    <WeightInput
-                        id="bodyweight"
-                        units={units}
-                        weight={bodyweight}
-                        setUnits={(value) => { updateParam("u", value) }}
-                        setWeight={(value) => { updateParam("bw", value) }}
-                        className="col-span-3 h-8 sm:h-9 "
-                    />
-                </InputWrapper>
-            </Card>
+                    <InputWrapper label="Gender:" htmlFor="gender">
+                        <SelectInput
+                            id="gender"
+                            value={gender}
+                            setValue={(value) => { updateParam("g", value) }}
+                            options={dictionary.gender}
+                            className="col-span-3 h-8 sm:h-9"
+                        />
+                    </InputWrapper>
+                    <InputWrapper label="Bodyweight:" htmlFor="bodyweight">
+                        <WeightInput
+                            id="bodyweight"
+                            units={units}
+                            weight={bodyweight}
+                            setUnits={(value) => { updateParam("u", value) }}
+                            setWeight={(value) => { updateParam("bw", value) }}
+                            className="col-span-3 h-8 sm:h-9 "
+                        />
+                    </InputWrapper>
+                </Card>
 
-            <Card className="grid grid-cols-4 py-6 px-8 gap-y-2 gap-x-2 sm:gap-x-4">
-                <InputWrapper label="Exercise:" htmlFor="exercise">
-                    <SelectInput
-                        id="exercise"
-                        value={exercise}
-                        setValue={(value) => { updateParam("ex", value) }}
-                        options={dictionary.exercise}
-                        className="col-span-3 h-8 sm:h-9"
-                    />
-                </InputWrapper>
-                <InputWrapper label="Weight:" htmlFor="weigth">
-                    <WeightInput
-                        id="weight"
-                        units={units}
-                        weight={weight}
-                        setUnits={(value) => { updateParam("u", value) }}
-                        setWeight={(value) => { updateParam("w", value) }}
-                        className="col-span-3 h-8 sm:h-9"
-                    />
-                </InputWrapper>
-                <InputWrapper label="Repetitions:" htmlFor="reps">
-                    <Input
-                        id="reps"
-                        type="number"
-                        value={reps ? reps : ""}
-                        onChange={(e) => updateParam("r", e.target.value)}
-                        className="col-span-3 border h-8 sm:h-9 px-2 rounded text-sm sm:text-base"
-                    />
-                </InputWrapper>
-            </Card>
+                <Card className="grid grid-cols-4 py-6 px-8 gap-y-2 gap-x-2 sm:gap-x-4">
+                    <InputWrapper label="Exercise:" htmlFor="exercise">
+                        <SelectInput
+                            id="exercise"
+                            value={exercise}
+                            setValue={(value) => { updateParam("ex", value) }}
+                            options={dictionary.exercise}
+                            className="col-span-3 h-8 sm:h-9"
+                        />
+                    </InputWrapper>
+                    <InputWrapper label="Weight:" htmlFor="weigth">
+                        <WeightInput
+                            id="weight"
+                            units={units}
+                            weight={weight}
+                            setUnits={(value) => { updateParam("u", value) }}
+                            setWeight={(value) => { updateParam("w", value) }}
+                            className="col-span-3 h-8 sm:h-9"
+                        />
+                    </InputWrapper>
+                    <InputWrapper label="Repetitions:" htmlFor="reps">
+                        <Input
+                            id="reps"
+                            type="number"
+                            value={reps ? reps : ""}
+                            onChange={(e) => updateParam("r", e.target.value)}
+                            className="col-span-3 border h-8 sm:h-9 px-2 rounded text-sm sm:text-base"
+                        />
+                    </InputWrapper>
+                </Card>
 
-            <BarChart
-                oneRepMax={oneRepMax}
-                bodyweight={Number(bodyweight)}
-                exercise={exercise}
-                gender={gender}
-                units={units}
-            />
-        </div>
+                <BarChart
+                    oneRepMax={oneRepMax}
+                    bodyweight={Number(bodyweight)}
+                    exercise={exercise}
+                    gender={gender}
+                    units={units}
+                />
+            </div>
+        </>
     );
 }
 

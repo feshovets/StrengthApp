@@ -4,21 +4,24 @@ import { twMerge } from "tailwind-merge";
 
 import Calculator from "./pages/Calculator";
 import Standarts from "./pages/Standarts";
+import { HelmetProvider } from "react-helmet-async";
 
 function App() {
   return (
-    <main className={twMerge("flex flex-col min-h-screen font-poppins space-y-6 sm:space-y-12",
-      "bg-gradient-to-r from-zinc-200 via-zinc-100 to-zinc-200 text-zinc-800",
-      "dark:from-zinc-950 dark:via-black dark:to-zinc-950 dark:text-zinc-300")}
-    >
-      <Header />
-      {/* Define Routes */}
-      <Routes>
-        <Route path="/" element={<Calculator />} />
-        <Route path="/standarts" element={<Standarts />} />
-      </Routes>
-      <Footer />
-    </main>
+    <HelmetProvider>
+      <main className={twMerge("flex flex-col min-h-screen font-poppins space-y-6 sm:space-y-12",
+        "bg-gradient-to-r from-zinc-200 via-zinc-100 to-zinc-200 text-zinc-800",
+        "dark:from-zinc-950 dark:via-black dark:to-zinc-950 dark:text-zinc-300")}
+      >
+        <Header />
+        {/* Define Routes */}
+        <Routes>
+          <Route path="/" element={<Calculator />} />
+          <Route path="/standarts" element={<Standarts />} />
+        </Routes>
+        <Footer />
+      </main>
+    </HelmetProvider>
   );
 }
 
