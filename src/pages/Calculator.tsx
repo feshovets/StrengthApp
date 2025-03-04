@@ -34,7 +34,7 @@ export default function Calculator() {
     })), [weight, reps])
 
     return (
-        <div className="max-w-3xl mx-auto p-4 space-y-4">
+        <div className="px-4 sm:px-0 w-full max-w-3xl mx-auto space-y-4">
             <div className="grid grid-cols-4 bg-zinc-50 py-6 px-8 rounded-md shadow-sm gap-y-2 gap-x-2 sm:gap-x-4">
                 <h2 className="col-span-4 text-xl sm:text-2xl font-bold text-center py-2">
                     One Rep Max Calculator

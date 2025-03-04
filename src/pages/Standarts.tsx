@@ -26,7 +26,7 @@ function Standarts() {
     const oneRepMax = useMemo(() => calculate1RM(Number(weight), Number(reps)), [weight, reps]);
 
     return (
-        <div className="max-w-3xl mx-auto p-4 space-y-4 text-zinc-800">
+        <div className="px-4 sm:px-0 w-full max-w-3xl mx-auto space-y-4">
             <section className="grid grid-cols-4 bg-zinc-50 py-6 px-8 rounded-md shadow-sm gap-y-2 gap-x-2 sm:gap-x-4">
                 <div className="col-span-4 py-2">
                     <h3 className="text-xl sm:text-2xl font-bold text-center rounded-md">
@@ -134,7 +134,7 @@ function BarChart({
 
                 <div className={
                     twMerge("flex grow text-white  bg-zinc-800 rounded items-center justify-center transition-color",
-                        Math.max(level, 0) == index && !isOpacity && "text-black bg-amber-400"
+                        Math.max(level, 0) == index && !isOpacity && "text-black bg-red-400"
                     )}>
                     <p className="text-lg sm:text-2xl md:text-3xl font-bold opacity-20">
                         {ratio.toFixed(2)}{"x"}
@@ -152,16 +152,15 @@ function BarChart({
 
     return (
         <section
-            className={twMerge("bg-zinc-50 py-4 px-4 sm:px-8 rounded-md shadow-sm overflow-hidden transition-all",
-                isHidden ? 'max-h-8 sm:max-h-10' : "max-h-screen")
-            }>
+            className={twMerge("bg-zinc-50 py-4 px-4 sm:px-8 rounded-md shadow-sm overflow-hidden transition-all")}>
             <div className="text-center pt-4 sm:pt-8 space-y-0.5">
                 <h2 className="text-lg sm:text-2xl font-bold">
-                    Your <span className="underline capitalize">{exercise}</span> strength level: {' '}
-                    <span className="underline capitalize">{dictionary.levels[Math.max(level, 0)]}</span>
+                    Your <span className="underline">{exercise}</span> strength level: {' '}
+                    {!isHidden && <span className={"underline capitalize"}> {dictionary.levels[Math.max(level, 0)]}</span>}
                 </h2>
-                <p className="text-xs sm:text-base font-semibold text-zinc-500">
-                    your estimated one rep max is <span>{oneRepMax.toFixed(1)}{' '}{units}</span>
+                <p className="text-xs sm:text-base font-semibold text-zinc-500 transition-all">
+                    your estimated one rep max:{' '}
+                    {!isHidden && <span>{oneRepMax.toFixed(1)}{' '}{units}</span>}
                 </p>
             </div>
             <div className={"grid grid-cols-5 gap-2 sm:gap-x-4 aspect-[1.5] items-end"}>
