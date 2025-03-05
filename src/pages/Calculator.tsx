@@ -39,7 +39,6 @@ export default function Calculator() {
     return (
         <>
             <Helmet>
-
                 <title>One Rep Max Calculator</title>
                 <meta
                     name="description"
@@ -52,9 +51,9 @@ export default function Calculator() {
             </Helmet>
             <div className="w-full max-w-3xl mx-auto space-y-4 px-4">
                 <Card className="grid grid-cols-4 py-6 px-8 gap-y-2 gap-x-2 sm:gap-x-4">
-                    <h2 className="col-span-4 text-xl sm:text-2xl font-bold text-center py-2">
+                    <h1 className="col-span-4 text-xl sm:text-2xl font-bold text-center py-2">
                         One Rep Max Calculator
-                    </h2>
+                    </h1>
                     <InputWrapper label="Weight:" htmlFor="weight">
                         <WeightInput
                             id="weight"
@@ -77,9 +76,9 @@ export default function Calculator() {
                 </Card>
 
                 <Card className="py-6 px-8 space-y-2">
-                    <h3 className="text-lg sm:text-2xl font-bold text-center py-2 sm:py-4 rounded-md">
+                    <h2 className="text-lg sm:text-2xl font-bold text-center py-2 sm:py-4 rounded-md">
                         Your one rep max is {estimation[0].weight.toFixed(1)} kg
-                    </h3>
+                    </h2>
                     <table className="w-full text-left text-sm sm:text-base">
                         <thead>
                             <tr>
@@ -128,14 +127,14 @@ function ExtraTable({
 
     return (
         <Card className="relative py-6 px-8 space-y-2">
-            <h3 className="text-lg sm:text-2xl font-bold text-center py-2 sm:py-4 rounded-md leading-5">
+            <h2 className="text-lg sm:text-2xl font-bold text-center py-2 sm:py-4 rounded-md leading-5">
                 Estimated 1RM for {" "} <br className="sm:hidden" />
-                <span className="underline">x</span>
+                <span className="underline decoration-zinc-500">x</span>
                 {" "}more{" "}
-                <span className="underline">
+                <span className="underline decoration-rose-500">
                     {forReps ? "reps" : "weight"}
                 </span>
-            </h3>
+            </h2>
             <table className="w-full text-left text-sm sm:text-base">
                 <thead>
                     <tr>

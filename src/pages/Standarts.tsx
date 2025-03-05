@@ -25,7 +25,6 @@ function Standarts() {
     const weight = getNumberParam("w");
     const reps = getNumberParam("r");
 
-
     const oneRepMax = useMemo(() => calculate1RM(Number(weight), Number(reps)), [weight, reps]);
 
     return (
@@ -43,9 +42,9 @@ function Standarts() {
             <div className="w-full max-w-3xl mx-auto space-y-4 px-4">
                 <Card className="grid grid-cols-4 py-6 px-8 gap-y-2 gap-x-2 sm:gap-x-4">
                     <div className="col-span-4 py-2">
-                        <h3 className="text-xl sm:text-2xl font-bold text-center rounded-md">
+                        <h1 className="text-xl sm:text-2xl font-bold text-center rounded-md">
                             Strength Standards
-                        </h3>
+                        </h1>
                         <p className="text-xs sm:text-sm font-semibold text-zinc-500 text-center leading-4">
                             (according to your time spent in the gym)
                         </p>
@@ -56,7 +55,8 @@ function Standarts() {
                             id="gender"
                             value={gender}
                             setValue={(value) => { updateParam("g", value) }}
-                            options={dictionary.gender}
+
+                            options={Object.keys(dictionary.gender).map((key) => ({ value: key, name: dictionary.gender[key as Gender] }))}
                             className="col-span-3 h-8 sm:h-9"
                         />
                     </InputWrapper>
@@ -78,7 +78,7 @@ function Standarts() {
                             id="exercise"
                             value={exercise}
                             setValue={(value) => { updateParam("ex", value) }}
-                            options={dictionary.exercise}
+                            options={Object.keys(dictionary.exercise).map((key) => ({ value: key, name: dictionary.exercise[key as Exercise] }))}
                             className="col-span-3 h-8 sm:h-9"
                         />
                     </InputWrapper>
@@ -143,8 +143,8 @@ function BarChart({
                 className={twMerge("flex flex-col space-y-1 transition-opacity min-h-20 text-center", isOpacity && "opacity-50 dark:opacity-30")}
             >
                 <p className="sm:text-xl font-bold">
-                    {levelWeight}
-                    <span className="text-sm sm:text-lg">{units}</span>
+                    {levelWeight.toFixed(0)}
+                    <span className="align-baseline text-sm sm:text-base">{units}</span>
                 </p>
 
                 <div className={
@@ -168,8 +168,8 @@ function BarChart({
         <Card className={twMerge("py-6 px-4 sm:px-8 overflow-hidden transition-all")}>
             <div className="text-center pt-2 sm:pt-4 space-y-0.5">
                 <h2 className="text-lg sm:text-2xl font-bold">
-                    Your <span className="underline">{exercise}</span> strength level: {' '}
-                    {!isHidden && <span className={"underline capitalize"}> {dictionary.levels[Math.max(level, 0)]}</span>}
+                    Your <span className="underline capitalize decoration-zinc-500">{dictionary.exercise[exercise]}</span> strength level: {' '}
+                    {!isHidden && <span className={"underline capitalize decoration-rose-500"}> {dictionary.levels[Math.max(level, 0)]}</span>}
                 </h2>
                 <p className="text-xs sm:text-base font-semibold text-zinc-500 transition-all">
                     your estimated one rep max:{' '}

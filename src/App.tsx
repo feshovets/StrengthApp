@@ -1,5 +1,4 @@
 import { Routes, Route, NavLink, Link } from "react-router-dom";
-import useDarkMode from "./utils/hooks/useDarkMode";
 import { twMerge } from "tailwind-merge";
 
 import Calculator from "./pages/Calculator";
@@ -28,8 +27,6 @@ function App() {
 }
 
 function Header() {
-  const { isDarkMode, toggleDarkMode } = useDarkMode();
-
   return (
     <header className="flex relative justify-between items-center h-12 sm:h-14 px-4 sm:px-16 bg-white dark:bg-zinc-900  shadow">
       <div id="logo" className="font-semibold font-poppins text-xl sm:text-2xl w-24">
@@ -59,10 +56,8 @@ function Header() {
         </NavLink>
       </div>
 
-      {/* For Developement purposes */}
-      <button className="hidden sm:flex w-24" onClick={toggleDarkMode}>
-        {isDarkMode ? 'Light Mode' : 'Dark Mode'}
-      </button>
+      <div className="hidden sm:flex w-24">
+      </div>
     </header>
   )
 }

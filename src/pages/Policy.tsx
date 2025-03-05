@@ -8,7 +8,7 @@ export function Policy() {
                     <h1 className="text-2xl font-semibold">Privacy Policy</h1>
                     <p className="text-sm text-zinc-500">Last updated: March 4, 2025</p>
                 </div>
-                <ul className="space-y-4  text-pretty text-sm">
+                <ul className="space-y-4 text-justify text-pretty text-sm ">
                     <li>
                         <h3 className="font-semibold text-lg">Introduction</h3>
                         Welcome to LiftStats. Your privacy is important to us. This Privacy Policy explains how we collect, use, and protect your information when you visit our the "LiftStats".
